@@ -217,6 +217,15 @@ h1,h2,h3{margin:0;line-height:1.25}
   .logo span{display:none}
 }
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+.wemo{font-size:46px;text-align:center;background:var(--usoft);border-radius:16px;padding:10px 0;margin-bottom:10px;line-height:1.2}
+.xe{font-size:64px;text-align:center;line-height:1.2;margin:4px 0 8px}.xpre{text-align:center}.xar{font-size:24px;font-weight:800;text-align:center;margin:6px 0}
+.spk.big{width:84px;height:84px;font-size:36px;border-radius:50%;margin:6px auto}
+.ar2{margin:6px 0 0;padding:0 22px 0 0;line-height:2;font-size:17px}.ar2 li{margin-bottom:8px}
+.xin{width:100%;font-size:24px;padding:12px;border-radius:16px;border:2px solid var(--line);background:var(--paper);color:var(--ink);text-align:center;margin:10px 0}.xin.okk{border-color:var(--ok);background:var(--okbg)}
+.xtop{display:flex;justify-content:space-between;align-items:center;font-size:22px;margin-bottom:8px}.xcatch{position:relative;height:320px;overflow:hidden;border-radius:22px;background:var(--usoft);border:1px solid var(--line)}
+.xfall{position:absolute;padding:10px 16px;font-size:19px;font-weight:800;background:var(--paper);color:var(--ink);border-radius:16px;box-shadow:var(--shadow);border:2px solid var(--line)}
+.xans{min-height:60px;border:2px dashed var(--line);border-radius:18px;padding:8px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin:10px 0}.xans.okk{border-color:var(--ok);background:var(--okbg)}.xans.bad{border-color:var(--bad);background:var(--badbg)}
+.xtiles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.xt{background:var(--paper);color:var(--ink);font-weight:700;font-size:19px;border-radius:12px;padding:8px 14px;box-shadow:var(--shadow);border:2px solid var(--line);cursor:pointer}.xt.used{opacity:.25}.xt.on{background:var(--usoft);border-color:var(--u)}
 </style>
 </head>
 <body>
@@ -1062,13 +1071,316 @@ function irregularSet(){
   };
 }
 let irrCache = null;
-function lessonGames(l){ if (l.gen === "irregular") { irrCache = irrCache || irregularSet(); return irrCache.games; } return l.games; }
+function lessonGames(l){ if (l.gen === "irregular") { irrCache = irrCache || irregularSet(); return irrCache.games.concat(autoGames(l)); } return l.games.concat(autoGames(l)); }
 function lessonQuiz(l){ if (l.gen === "irregular") { irrCache = irrCache || irregularSet(); return irrCache.quiz; } return l.quiz; }
 
 const GNAMES = {
   pic:["🖼️", "ماذا في الصورة؟", "Picture quiz"], memory:["🃏", "لعبة الذاكرة", "Memory cards"], match:["🔗", "وصّل الأزواج", "Match it"], fill:["✏️", "أكمل الفراغ", "Fill the gap"],
   order:["🧱", "ابنِ الجملة", "Build the sentence"], scramble:["🔠", "رتّب الحروف", "Unscramble"], sort:["🗂️", "صنّف الكلمات", "Sort it"], tf:["🤔", "صح أم خطأ؟", "True or false"]
 };
+
+/* ===== Added: emoji pictures, extra games, expanded Arabic ===== */
+const nk=s=>String(s).toLowerCase().replace(/[^a-z0-9→ ]/g,"").replace(/\s+/g," ").trim();
+const EMOS=`article=📰
+idea=💡
+everyone=🧑‍🤝‍🧑
+find out=🔍
+reading=📖
+team=👥
+topic=🗂️
+magazine=📔
+Where …?=📍
+How old …?=🎂
+When …?=⏰
+How many …?=🔢
+What …?=❓
+Why …?=🤔
+always=🔁
+often=📆
+recycle=♻️
+protect the environment=🌍🛡️
+waste energy=💡🗑️
+global warming=🌡️🔥
+climate change=🌦️🌍
+pollution=🏭☁️
+Brilliant!=🌟
+I know!=☝️💡
+Me too!=🙋
+should=👍
+shouldn't=👎
+must=❗
+mustn't=🚫
+need to=✅
+needn't=😌
+cyclone=🌀
+tornado=🌪️
+sandstorm=🏜️💨
+heatwave=🥵☀️
+drought=🏜️🥀
+forest fire=🌲🔥
+'Are you tired?'=😴
+'When is the concert?'=🎤
+'What do you want?'=🤷
+'Switch off the light.'=💡🔌
+'Don't be late.'=⏰🏃
+I think you should…=💬👍
+Why don't you…?=🤔💬
+If I were you, I would…=🙋‍♂️💭
+Perhaps you ought to…=🧐
+You could always…=🛠️
+Firstly=1️⃣
+Secondly=2️⃣
+while=⏳
+However,=↔️
+In conclusion,=🏁
+survey=📊
+abseiling=🧗🪢
+horse riding=🏇
+sandboarding=🏂🏜️
+caving=🔦🕳️
+mountain biking=🚵
+motor racing=🏎️
+I suppose so.=🤷‍♂️
+I told you so!=☝️😏
+Not really.=😐
+I → myself=🙋
+you → yourself=🫵
+he → himself=👦🪞
+she → herself=👧🪞
+it → itself=🐱🪞
+we → ourselves=👫
+you → yourselves=🫵🫵
+they → themselves=🧑‍🤝‍🧑
+nine-hour=9️⃣⏱️
+home-made=🏠🍰
+ice-cold=🧊🥤
+English-speaking=🗣️🇬🇧
+prize-winning=🏆
+world-famous=🌍⭐
+old-fashioned=📻
+north=⬆️🧭
+south=⬇️🧭
+east=➡️🧭
+west=⬅️🧭
+scenery=🏞️
+tide=🌊
+had checked=📋✅
+had watched=📺
+had taken=🎒
+had left=🚪
+had eaten=🍽️
+hadn't walked=🚫🚶
+Would you rather…?=🤷‍♀️❓
+I'd rather…=👈
+Would you prefer to…?=🙂❓
+I'd prefer to…=👍
+Should we…?=🤝
+fantastic=🤩
+brilliant=🌟
+delicious=😋
+awful=🤢
+terrible=😱
+terrific=👏
+stunning=😍
+perfect=💯
+expert=🧑‍🏫
+gentle=🕊️
+receipt=🧾
+on sale=🏷️
+second-hand=♻️👕
+queue=🧍🧍🧍
+customer=🛒🙋
+till=🧮
+bank card=💳
+exchange=🔄
+get a refund=💸↩️
+shop assistant=🧑‍💼🛍️
+online shopping=🛒💻
+pay contactless=📲💳
+No chance!=🙅‍♂️
+I'm only kidding!=😜
+That's true.=✅
+If I need clothes, my parents give me money.=👕💰
+If I get angry, I go for a walk.=😠🚶
+If I pass the exam, I will celebrate.=🎉📝
+If we rest now, we won't be tired.=😴✅
+What will you do if it rains?=🌧️❓
+look at=👀
+be invisible=🫥
+be an inventor=🔧💡
+have a wish=🧞
+donate to a charity=🎁❤️
+win a cup=🏆
+pass exams=📝✅
+travel the world=✈️🌍
+have a lot of money=💰
+become a film character=🎬
+become a school principal=🏫👔
+If I had a wish, I'd ask for a long and happy life.=🧞
+If I were rich, I'd buy a big house.=🤑🏠
+If I could see the snake, I would be scared.=🐍😨
+If I knew the answer, I would tell you.=🧠💬
+If you won 50 OMR, what would you buy?=💵🛍️
+I'm afraid I have a complaint about…=😟📢
+What seems to be wrong?=🤨
+They're damaged.=💔
+There's a button missing.=🔘❌
+Please could I have a refund?=💸🙏
+I'll need to see your receipt.=🧾👀
+Subject:=📧
+Hi Ammar,=👋
+Thanks for the message.=🙏💬
+If you have time, send me a message.=⏰✉️
+Bye, / See you soon,=👋
+unless=🚫❓
+103=🔢
+250=🔢
+580=🔢
+605=🔢
+950=🔢
+1,000=🔢
+We should recycle plastic.=♻️
+Mum asked me if I wanted a biscuit.=🍪👩
+I can see myself in the mirror.=🪞
+I went for a run after I had put on my trainers.=👟🏃
+If I arrive late, I feel bad.=⏰😔
+If we help Aseel, she will be happy.=🤝😊
+If I could travel into space, I would visit Mars.=🚀🔴
+Report=📑
+Brochure=📘
+Email=📧
+save water=🚰
+switch off lights=💡
+pick up rubbish=🗑️
+plant trees=🌳
+destroy the rainforests=🪓🌴
+use renewable energy=☀️⚡
+get up=⬆️🧍
+get down=⬇️
+get out (of)=🚪➡️
+get into=🚗⬅️
+get onto=🪜
+get under=🔽
+flood=🌊🏠
+hailstorm=🌨️🧊
+snowstorm=❄️🌬️
+tsunami=🌊🌊
+volcano=🌋
+thunder and lightning=⛈️
+surfboarding=🏄
+water skiing=🎿🌊
+diving=🤿
+go-karting=🏁🛞
+paragliding=🪂
+rock climbing=🧗
+bay=🏖️
+valley=🏞️
+field=🌾
+wood=🌲
+sunrise=🌅
+sunset=🌇
+look up=⬆️👀
+look down=⬇️👀
+look around=🔄👀
+look through=🔭
+look under=🔽👀
+look behind=↩️👀
+travel back in time=⏳⏪
+go into space=🚀`;
+const EMO={};EMOS.split("\n").forEach(x=>{const i=x.lastIndexOf("=");EMO[nk(x.slice(0,i))]=x.slice(i+1)});
+const emo=en=>EMO[nk(en)]||"📝";
+const AR2={
+w1:["article = مقالة نقرؤها في المجلة، وidea = فكرة نقترحها، وfind out = نكتشف معلومة جديدة بالسؤال أو القراءة.","everyone تعني (الجميع) لكنها تُعامل كمفرد، لذلك نقول Everyone is… ولا نقول Everyone are….","طريقة الحفظ: اقرأ الكلمة، استمع لنطقها، ثم كوّن جملة قصيرة من عندك مثل: My favourite topic is football."],
+w2:["كلمات السؤال: Where للمكان، When للوقت، What للشيء، Why للسبب، How old للعمر، How many للعدد مع الجمع.","ترتيب السؤال: كلمة السؤال + فعل مساعد (do / does / is / are) + الفاعل. مثال: Where do you live؟ وHow old is she؟","always = دائمًا وoften = غالبًا، وتأتي قبل الفعل العادي: I always read. وبعد فعل to be: She is often late."],
+u1l1:["كلمات البيئة: recycle = نعيد التدوير، pollution = التلوث، global warming = ارتفاع حرارة الأرض، climate change = تغيّر المناخ.","نستعمل العبارات مع We should… للنصيحة: We should save water. وWe shouldn't waste energy.","اربط كل عبارة بصورتها: destroy the rainforests = تدمير الغابات، plant trees = زراعة الأشجار، use renewable energy = استعمال الطاقة المتجددة."],
+u1l2:["هذه عبارات للرد في المحادثة: Brilliant! للإعجاب، I know! عندما تتفق أو تتذكّر، Me too! عندما تشارك شخصًا في فعل أو شعور.","Me too تُقال بعد جملة مثبتة فقط: I like pizza. ← Me too. أما بعد جملة منفية فنقول Me neither.","تدرّب مع زميلك: أحدكما يقول جملة والآخر يرد بإحدى العبارات."],
+u1l3:["should = نصيحة (من الأفضل)، must = إلزام قوي، need to = حاجة. بعد should وmust نضع فعلًا بدون to.","في النفي: shouldn't = لا ينبغي، mustn't = ممنوع، needn't = ليس ضروريًا. انتبه: mustn't تختلف تمامًا عن needn't.","مثال: You mustn't run in the corridor. (ممنوع) / You needn't bring a pen. (مو لازم)"],
+u1l4:["get + حرف الجر يغيّر المعنى حسب الاتجاه: get into = يدخل أو يركب، get out of = يخرج أو ينزل، get up = يقوم، get down = ينزل، get onto = يصعد على، get under = يدخل تحت.","get into / get out of مع السيارة والأماكن المغلقة، وget on / onto مع الأشياء المفتوحة مثل السطح والحافلة.","الحل: انظر للصورة وحدّد الاتجاه ثم اختر حرف الجر المناسب."],
+u1l5:["صنّف الكوارث: مائية (flood, tsunami)، رياح (tornado, cyclone, sandstorm)، حرارة وجفاف (heatwave, drought)، نار (forest fire)، ثلج وبرد (snowstorm, hailstorm).","حسب الكتاب: cyclone وtornado كلاهما رياح قوية تدور في دوائر، لكن cyclone أكبر من tornado ويستمر وقتًا أطول.","هذه أسماء معدودة: نقول a flood وa tornado، وللجمع نضيف s: floods."],
+u1l6:["الكلام المنقول: نرجع الزمن خطوة للخلف: am / is ← was، do ← did، will ← would.","السؤال نعم/لا يصير جملة خبرية بعد if: 'Are you tired?' ← He asked if I was tired. ونحذف علامة الاستفهام ولا نستعمل do/does.","الأوامر: told + شخص + to + فعل، والنهي: told + شخص + not to + فعل. 'Switch off the light.' ← She told me to switch off the light. 'Don't be late.' ← He told me not to be late."],
+u1l7:["عبارات النصيحة: I think you should + فعل، Why don't you + فعل؟، If I were you, I would + فعل (نقول were مع كل الضمائر)، Perhaps you ought to + فعل، You could always + فعل.","الحروف الصامتة (silent letters) تُكتب ولا تُنطق، مثل k في know وb في climb. احفظ شكل الكلمة بالنظر.","أعطِ النصيحة مع السبب: You should sleep early because you look tired."],
+u1l8:["ترتيب التقرير: مقدمة عن الهدف، ثم النتائج بـ Firstly وSecondly، ثم However لمعلومة مختلفة، وأخيرًا In conclusion للخلاصة.","survey = استبيان. نعرض النسب هكذا: 18% of students said 'No'، وتُقرأ eighteen per cent.","while تربط حدثين في الوقت نفسه: While some students walk to school, others cycle."],
+u2l1:["كلمات الرياضات المغامرة: abseiling = النزول بالحبل، caving = استكشاف الكهوف، sandboarding = التزلج على الرمل، motor racing = سباق السيارات.","نقول go + اسم النشاط المنتهي بـ -ing: go caving، go horse riding، go mountain biking.","اكتب جملتين: I'd like to go caving because it is exciting."],
+u2l2:["I suppose so = أظن ذلك (موافقة مترددة)، Not really = لا، ليس تمامًا (رفض لطيف)، I told you so! = قلت لك! (عندما يحدث ما حذّرت منه).","نبرة الصوت مهمة: I told you so تُقال بمزاح مع الأصدقاء، وليست لطيفة مع الكبار.","استعمل هذه العبارات ردودًا قصيرة في الحوار."],
+u2l3:["الضمير الانعكاسي نستعمله عندما يكون الفاعل والمفعول نفس الشخص: I cut myself. (أنا جرحتُ نفسي).","للمفرد: -self (myself, yourself, himself, herself, itself)، وللجمع: -selves (ourselves, yourselves, themselves).","by myself تعني (بمفردي): I made it by myself."],
+u2l4:["الصفة المركبة = كلمتان بينهما شرطة تعملان كصفة واحدة قبل الاسم: a nine-hour flight.","إذا كان فيها رقم لا نضيف s: a nine-hour flight وليس nine-hours.","أمثلة: world-famous = مشهور عالميًا، home-made = مصنوع في البيت، ice-cold = بارد كالثلج، old-fashioned = قديم الطراز."],
+u2l5:["الجهات: north شمال، south جنوب، east شرق، west غرب، وتُكتب بحروف صغيرة إلا في الأسماء مثل North Pole.","scenery = المناظر الطبيعية (اسم غير معدود فلا نجمعه)، وtide = المد والجزر.","اربط كل كلمة بصورتها: field حقل، valley وادٍ، bay خليج، wood غابة صغيرة."],
+u2l6:["past perfect = had + التصريف الثالث (past participle). نستعمله لحدث وقع قبل حدث ماضٍ آخر.","مثال: When I arrived, the film had started. (الفيلم بدأ أولًا ثم وصلتُ). والنفي: hadn't + التصريف الثالث.","كلمات تساعدك: before, after, already, when. وانتبه للشاذ: eat ← eaten، take ← taken، leave ← left."],
+u2l7:["Would you rather + فعل؟ وI'd rather + فعل (بدون to). أما Would you prefer to + فعل؟ وI'd prefer to + فعل (مع to).","rather = أفضّل أن، prefer to = أفضّل. الفرق في وجود to فقط.","Should we…? للاقتراح المشترك: Should we go to the beach?"],
+u2l8:["البروشور يحاول إقناع القارئ، لذلك نستعمل صفات قوية: fantastic, stunning, delicious, perfect.","الصفات الإيجابية: terrific, brilliant, stunning. والسلبية: awful, terrible. وexpert = خبير، وgentle = لطيف أو هادئ.","رتّب البروشور: عنوان جذاب، وصف المكان، الأنشطة، ثم معلومات التواصل. استعمل جملًا قصيرة."],
+u3l1:["كلمات الشراء: receipt = الإيصال، till = صندوق الدفع، queue = طابور، customer = الزبون، refund = استرجاع المبلغ.","on sale = مخفّض السعر، second-hand = مستعمل، pay contactless = الدفع بالبطاقة دون إدخالها.","عبارات مفيدة: Can I get a refund? وCan I exchange it? وبعدها نُظهر الإيصال."],
+u3l2:["No chance! = مستحيل (رفض قوي)، I'm only kidding! = أمزح فقط، That's true. = هذا صحيح (موافقة).","تُستعمل بين الأصدقاء، وإذا قلت No chance! للمزاح فاتبعها بـ I'm only kidding!","كوّن حوارًا قصيرًا مع زميلك بهذه العبارات."],
+u3l3:["Zero conditional للحقائق والعادات: If + present simple, present simple. If I get angry, I go for a walk.","First conditional لاحتمال حقيقي في المستقبل: If + present simple, will + فعل. If it rains, we will stay home.","لا نضع will بعد if أبدًا. وإذا بدأنا بـ If نضع فاصلة بين الجملتين."],
+u3l4:["look + حرف الجر: look at = ينظر إلى، look up = للأعلى، look down = للأسفل، look around = يتلفّت حوله، look through = من خلال، look under = تحت، look behind = خلف.","look at يحتاج مفعولًا: Look at the board! أما بقية العبارات فقد تأتي بدونه: Look up!","اربط كل عبارة بصورتها لتحفظها."],
+u3l5:["عبارات لتخيّل الأمنيات: be invisible = تصبح غير مرئي، travel back in time = تسافر عبر الزمن، donate to a charity = تتبرع لجمعية خيرية.","نستعملها بعد If I could: If I could be invisible, I would…","الأفعال المتكررة: be, have, become, win, pass, travel, donate."],
+u3l6:["second conditional = مواقف خيالية أو مستبعدة: If + past simple, would + فعل.","مع I / he / she / it نقول were: If I were rich, I would buy a big house.","الفرق: first = ممكن (If it rains, I'll stay)، second = خيالي (If I won, I'd buy). والسؤال: What would you do if…?"],
+u3l7:["الشكوى المهذبة: ابدأ بـ I'm afraid…، اشرح المشكلة، اطلب الحل بـ Could I have…؟ وقدّم الإيصال.","للمشكلة: They're damaged (للجمع)، It's damaged (للمفرد)، There's a button missing.","اختم بشكر: Thank you for your help. فالنبرة المهذبة تساعدك على الوصول لحل."],
+u3l8:["الرسالة الإلكترونية غير الرسمية: Subject، تحية Hi + الاسم، موضوع الرسالة، خاتمة Bye أو See you soon.","unless = إلا إذا (if … not). I'll go unless it rains = سأذهب إلا إذا أمطرت.","لا نستعمل not مع unless لأن معناها المنفي موجود فيها."],
+lc1:["نقرأ الأعداد الكبيرة: 103 = one hundred and three، 250 = two hundred and fifty، 1,000 = one thousand.","نضع and بعد المئات، ولا نضيف s للمئة بعد رقم: two hundred وليس two hundreds.","تدرّب: اكتب رقمك المفضل بالحروف الإنجليزية."],
+rv1:["الأفعال الشاذة لا تنتهي بـ -ed، ولكل فعل ثلاثة أشكال: المصدر (go)، الماضي (went)، التصريف الثالث (gone).","بعضها لا يتغير: cut ← cut ← cut، put ← put ← put، hit ← hit ← hit. وبعضها له نمط: buy ← bought ← bought، bring ← brought ← brought.","الشكل الثاني للماضي البسيط (I went)، والثالث مع have / had (I have gone)."],
+rv2:["راجع القواعد: modals، الكلام المنقول، الضمائر الانعكاسية، past perfect، الجمل الشرطية.","قبل الإجابة اسأل نفسك: أي قاعدة؟ ثم ابحث عن كلمة مفتاحية: if, had, myself, asked if.","اقرأ الجملة كاملة بعد الإجابة لتتأكد أنها منطقية."],
+rv3:["نماذج الكتابة ثلاثة: تقرير (Report)، بروشور (Brochure)، رسالة (Email).","التقرير: عنوان + مقدمة + نتائج + خلاصة مع كلمات الربط. البروشور: صفات جذابة. الرسالة: تحية + موضوع + خاتمة.","لا تنسَ البدء بحرف كبير وعلامات الترقيم."]};
+const xa=s=>String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+const ALLR=UNITS.flatMap(u=>u.lessons.filter(l=>!l.gen).flatMap(l=>l.learn.rows||[]));
+const R8=l=>(l.learn.rows||[]).filter(r=>r[1]&&r[1].length<=46),shortR=l=>R8(l).filter(r=>r[0].length<=28);
+const RV3S=["Firstly, we asked fifty students about energy.","In conclusion, most students recycle at home.","The beach is stunning and the food is delicious.","Thanks for your message, I will see you soon.","Unless I go now, I will miss the bus.","However, some people prefer to stay at home."];
+const sentsOf=l=>{if(l.id==="rv3")return RV3S;const own=[...(l.learn.rows||[]).flatMap(r=>[r[2],r[0]]),...(l.games||[]).filter(g=>g.g==="fill").flatMap(g=>g.items.map(i=>i[0].replace("___",i[1][i[2]]))),...(l.quiz||[]).filter(q=>typeof q[0]==="string"&&q[0].includes("___")).map(q=>q[0].replace("___",q[1][q[2]]))];
+ const parts=own.filter(Boolean).flatMap(x=>String(x).replace(/\s*→.*$/,"").split(/\s+—\s+|\s*\b[AB]:\s*/)).map(x=>x.trim());
+ return [...new Set(parts.filter(x=>x&&!hasAr(x)&&!/[\/]/.test(x)&&/[.!?]$/.test(x)&&x.split(" ").length>=3&&x.split(" ").length<=14))]};
+const dis=(r,l,i)=>[...new Set([...shuffle(l.learn.rows||[]),...shuffle(ALLR)].map(x=>x[i]).filter(x=>x&&x!==r[i]&&(i===1?x.length<=46:x.length<=28)))].slice(0,3);
+const XR={
+ epic:l=>shuffle(shortR(l)).slice(0,8).map(r=>({pre:`<div class="xe">${emo(r[0])}</div>`,q:"أي كلمة تناسب الصورة؟",opts:[r[0],...dis(r,l,0)],a:0,why:`${r[0]} = ${r[1]}`})),
+ aren:l=>shuffle(shortR(l)).slice(0,8).map(r=>({pre:`<div class="xe">${emo(r[0])}</div>`,q:r[1],opts:[r[0],...dis(r,l,0)],a:0,why:`${r[1]} = ${r[0]}`})),
+ mean:l=>shuffle(R8(l)).slice(0,8).map(r=>({pre:`<div class="xe">${emo(r[0])}</div>`,q:r[0],opts:[r[1],...dis(r,l,1)],a:0,why:`${r[0]} = ${r[1]}`})),
+ listen:l=>shuffle(shortR(l)).slice(0,8).map(r=>({pre:`<button class="spk big" data-say="${xa(r[0])}">🔊</button>`,q:"اسمع ثم اختر الكلمة المكتوبة",opts:[r[0],...dis(r,l,0)],a:0,say:r[0],auto:1,why:`${r[0]} = ${r[1]}`})),
+ tfm:l=>shuffle(R8(l)).slice(0,8).map(r=>{const t=Math.random()<.5;return{pre:`<div class="xe">${emo(r[0])}</div>`,q:`${r[0]}  =  ${t?r[1]:dis(r,l,1)[0]}`,opts:["صح ✔","خطأ ✘"],a:t?0:1,why:`${r[0]} = ${r[1]}`}})
+};
+function xType(h,g,f){const I=g.T||shuffle(shortR(g.l)).slice(0,6).map(r=>({pre:`<div class="xe">${emo(r[0])}</div><div class="xar">${xa(r[1])}</div>`,a:r[0]}));let k=0,ok=0;const step=()=>{if(k>=I.length)return f(ok,I.length);const r=I[k];let wr=0;
+ h.innerHTML=`<div class="xq">${r.pre}<input class="xin en" dir="ltr" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${xa(r.a[0])} …"><p class="xh muted"></p><div class="row xrow" style="justify-content:center"><button class="btn xck">تحقق ✓</button><button class="btn ghost xsk">أظهر الجواب</button></div></div>`;
+ const inp=h.querySelector("input"),nx=()=>{h.querySelector(".xrow").innerHTML='<button class="btn xnx">التالي ←</button>';h.querySelector(".xnx").onclick=()=>{k++;step()}};
+ h.querySelector(".xck").onclick=()=>{if(nk(inp.value)===nk(r.a)){if(!wr){ok++;addXP(10)}beep(true);say(r.a);inp.classList.add("okk");nx()}else{wr=1;beep(false);h.querySelector(".xh").textContent=`تلميح: ${r.a.length} حرفًا وتبدأ بحرف ${r.a[0]}`}};
+ inp.onkeydown=e=>{if(e.key==="Enter")h.querySelector(".xck").onclick()};
+ h.querySelector(".xsk").onclick=()=>{wr=1;inp.value=r.a;say(r.a);nx()}};step()}
+function xCatch(h,g,f){const W=g.W||shortR(g.l),T=shuffle(W).slice(0,5);let ti=0,sc=0,lives=3,els=[],end=0;
+ h.innerHTML=`<div class="xtop"><b class="xct en"></b><span class="xlv"></span></div><div class="xcatch"></div><p class="muted" style="text-align:center">اضغط على المعنى الصحيح قبل ما ينزل!</p>`;const cs=h.querySelector(".xcatch");
+ const hud=()=>{h.querySelector(".xct").textContent=T[ti][0];h.querySelector(".xlv").textContent="❤️".repeat(lives)+" ⭐"+sc};
+ const fin=()=>{end=1;f(sc,T.length)};
+ const sp=()=>{const it=Math.random()<.5?T[ti]:(shuffle(W.filter(x=>x!==T[ti]&&x[1]!==T[ti][1]))[0]||T[ti]);const e=document.createElement("button");e.className="xfall";e.textContent=it[1];e.style.left=Math.random()*Math.max(10,cs.clientWidth-150)+"px";e.y=-50;
+  e.onclick=()=>{if(e.dead||end)return;e.dead=1;e.remove();if(it===T[ti]){sc++;addXP(10);beep(true);els.forEach(x=>x.remove());els=[];ti++;if(ti>=T.length)return fin();hud();say(T[ti][0])}else{lives--;beep(false);hud();if(!lives)fin()}};cs.appendChild(e);els.push(e)};
+ hud();say(T[0][0]);let last=performance.now(),acc=900;
+ const loop=t=>{if(!cs.isConnected||end)return;const dt=Math.min(50,t-last);last=t;acc+=dt;if(acc>1300){acc=0;sp()}els.forEach(e=>{e.y+=dt*.07;e.style.top=e.y+"px";if(e.y>cs.clientHeight)e.dead=1});els.filter(e=>e.dead&&e.isConnected).forEach(e=>e.remove());els=els.filter(e=>!e.dead);requestAnimationFrame(loop)};requestAnimationFrame(loop)}
+function xSent(h,g,f){const I=shuffle(g.S||sentsOf(g.l)).slice(0,5);let k=0,ok=0;const step=()=>{if(k>=I.length)return f(ok,I.length);const s=I[k],tk=s.split(" "),T=shuffle(tk.map((x,i)=>({x,i})));let ans=[],wr=0;
+ h.innerHTML=`<p class="muted" style="text-align:center">رتّب الكلمات لتكوّن الجملة. اضغط 🔊 لتسمعها.</p><div style="text-align:center"><button class="spk big" data-say="${xa(s)}">🔊</button></div><div class="xans en" dir="ltr"></div><div class="xtiles en" dir="ltr">${T.map(o=>`<button class="xt" data-i="${o.i}">${xa(o.x)}</button>`).join("")}</div><div class="xnxw"></div>`;
+ const A=h.querySelector(".xans"),B=h.querySelector(".xtiles"),draw=()=>{A.innerHTML=ans.map(o=>`<button class="xt on" data-i="${o.i}">${xa(o.x)}</button>`).join("");A.querySelectorAll(".xt").forEach(b=>b.onclick=()=>{const o=ans.find(z=>z.i==b.dataset.i);ans=ans.filter(z=>z!==o);B.querySelector(`[data-i="${o.i}"]`).classList.remove("used");draw()})};
+ B.querySelectorAll(".xt").forEach(b=>b.onclick=()=>{if(b.classList.contains("used"))return;b.classList.add("used");ans.push(T.find(z=>z.i==b.dataset.i));draw();
+  if(ans.length===T.length){if(ans.map(z=>z.x).join(" ")===s){if(!wr){ok++;addXP(10)}beep(true);say(s);A.classList.add("okk");h.querySelector(".xnxw").innerHTML='<button class="btn" style="margin:12px auto;display:flex">التالي ←</button>';h.querySelector(".xnxw button").onclick=()=>{k++;step()}}else{wr=1;beep(false);A.classList.add("bad");setTimeout(()=>{A.classList.remove("bad");ans=[];B.querySelectorAll(".xt").forEach(x=>x.classList.remove("used"));draw()},900)}}})};step()}
+const XD={epic:(h,g,f)=>runMCQ(h,XR.epic(g.l),f),aren:(h,g,f)=>runMCQ(h,XR.aren(g.l),f),mean:(h,g,f)=>runMCQ(h,XR.mean(g.l),f),listen:(h,g,f)=>runMCQ(h,XR.listen(g.l),f),tfm:(h,g,f)=>runMCQ(h,XR.tfm(g.l),f),
+ spellw:(h,g,f)=>gScramble(h,{items:shuffle(R8(g.l).filter(r=>/^[a-z'-]{3,12}$/i.test(r[0]))).slice(0,6).map(r=>[r[0],r[1]])},f),type:xType,catch:xCatch,sent:xSent};
+Object.assign(GNAMES,{epic:["🖼️","اختر الكلمة من الصورة","Picture → word"],aren:["🔄","ترجم من العربي","Arabic → English"],mean:["🔁","ما معنى الكلمة؟","Word → Arabic"],listen:["🎧","اسمع واختر","Listen & choose"],tfm:["✅","صح أم خطأ؟ (المعنى)","Meaning true / false"],type:["⌨️","اكتب الكلمة","Type it"],catch:["🎯","اصطد المعنى","Catch it"],spellw:["🔤","رتّب حروف الكلمة","Spell it"],sent:["🧩","رتّب جملة الدرس","Build a sentence"]});
+const IR=()=>IRREG.filter(v=>!/[\/ ]/.test(v[1]+v[2]));
+const irO=(v,i)=>[v[i],...shuffle([...new Set(IR().map(x=>x[i]).filter(x=>x!==v[i]))]).slice(0,3)];
+const irS=["She went to school by bus.","I bought a new bag yesterday.","They have already eaten lunch.","He has broken his pencil.","We saw a big bird in the garden.","My father drove to work.","I have never flown in a plane.","She wrote a letter to her friend.","The children have chosen their books.","I had finished my homework before dinner."];
+const irM=(h,f,fn)=>runMCQ(h,shuffle(IR()).slice(0,8).map(fn),f);
+Object.assign(XD,{
+ ipast:(h,g,f)=>irM(h,f,v=>({q:`Past simple of "${v[0]}" → ___`,opts:irO(v,1),a:0,why:`${v[0]} – ${v[1]} – ${v[2]}`})),
+ ipp:(h,g,f)=>irM(h,f,v=>({q:`Past participle of "${v[0]}" → ___`,opts:irO(v,2),a:0,why:`${v[0]} – ${v[1]} – ${v[2]}`})),
+ ilisten:(h,g,f)=>irM(h,f,v=>({pre:`<button class="spk big" data-say="${xa(v[1])}">🔊</button>`,q:"اسمع صيغة الماضي ثم اختر الفعل الأصلي",opts:[v[0],...shuffle(IR().map(x=>x[0]).filter(x=>x!==v[0])).slice(0,3)],a:0,say:v[1],auto:1,why:`${v[0]} – ${v[1]} – ${v[2]}`})),
+ tfi:(h,g,f)=>irM(h,f,v=>{const t=Math.random()<.5,o=shuffle(IR().filter(x=>x[1]!==v[1]&&x[2]!==v[2]))[0],bad=Math.random()<.5?[v[0],o[1],v[2]]:[v[0],v[1],o[2]];return{q:(t?v:bad).join(" – "),opts:["صح ✔","خطأ ✘"],a:t?0:1,why:`الصحيح: ${v.join(" – ")}`}}),
+ itype:(h,g,f)=>xType(h,{T:shuffle(IR()).slice(0,6).map(v=>({pre:`<div class="xar en" dir="ltr">${v[0]} → ?</div><p class="muted" style="text-align:center">اكتب الماضي البسيط (past simple)</p>`,a:v[1]}))},f),
+ ispell:(h,g,f)=>gScramble(h,{items:shuffle(IR().filter(v=>/^[a-z]{3,8}$/.test(v[1]))).slice(0,6).map(v=>[v[1],"الماضي من "+v[0]])},f),
+ icatch:(h,g,f)=>xCatch(h,{W:IR().map(v=>[v[0],v[1]])},f)});
+Object.assign(GNAMES,{ipast:["🕰️","الماضي البسيط","Past simple"],ipp:["📦","التصريف الثالث","Past participle"],ilisten:["🎧","اسمع واختر الفعل","Listen & choose"],tfi:["✅","صح أم خطأ؟ (الأشكال)","True or false"],itype:["⌨️","اكتب الماضي","Type the past"],ispell:["🔤","رتّب حروف الماضي","Spell the past"],icatch:["🎯","اصطد صيغة الماضي","Catch the past"]});
+function autoGames(l){if(l._ag)return l._ag;
+ if(l.gen==="irregular")return l._ag=[{g:"ipast"},{g:"ipp"},{g:"ilisten"},{g:"tfi"},{g:"itype"},{g:"ispell"},{g:"icatch"},{g:"sent",S:irS}];const a=[],R=R8(l),S=shortR(l);
+ if(S.length>=3)a.push({g:"epic",l},{g:"aren",l},{g:"listen",l});
+ if(R.length>=3)a.push({g:"mean",l},{g:"tfm",l});
+ if(S.length>=3)a.push({g:"type",l});
+ if(S.length>=4)a.push({g:"catch",l});
+ if(R.filter(r=>/^[a-z'-]{3,12}$/i.test(r[0])).length>=3)a.push({g:"spellw",l});
+ if(sentsOf(l).length>=3)a.push({g:"sent",l});
+ return l._ag=a}
+const ar2Card=l=>AR2[l.id]?el("div",{class:"shell enter",style:"margin-top:14px"},el("div",{class:"core"},el("span",{class:"lang"},"شرح موسّع بالعربي"),el("ol",{class:"ar2"},...AR2[l.id].map(t=>el("li",{},t))))):null;
+document.addEventListener("click",e=>{const b=e.target.closest("[data-say]");if(b){e.stopPropagation();say(b.dataset.say)}},true);
 
 /* ---------- views ---------- */
 function render(){
@@ -1174,7 +1486,7 @@ function learnTab(u, l){
   let words;
   if (l.gen === "irregular") words = irregularTable();
   else words = el("div", { class:"words" }, L.rows.map(r => el("div", { class:"word" },
-    l.pics && l.pics[r[0]] ? el("img", { class:"wimg", src:IMG[l.pics[r[0]]], alt:r[0], loading:"lazy" }) : null,
+    l.pics && l.pics[r[0]] ? el("img", { class:"wimg", src:IMG[l.pics[r[0]]], alt:r[0], loading:"lazy" }) : el("div", { class:"wemo" }, emo(r[0])),
     el("div", { class:"top2" }, el("span", { class:"w en" }, r[0]), spk(r[0] + ". " + (r[2] && !hasAr(r[2]) ? r[2] : ""))),
     el("div", { class:"a" }, r[1]),
     r[2] ? el("div", { class:"ex en" }, r[2]) : null)));
@@ -1182,6 +1494,7 @@ function learnTab(u, l){
   return el("div", {},
     hero,
     box,
+    ar2Card(l),
     el("h2", { class:"sectitle" }, l.gen === "irregular" ? "جدول الأفعال: غطِّ وتذكّر" : "الكلمات والأمثلة"),
     words,
     el("div", { class:"tip" }, el("b", {}, "💡 انتبه: "), L.tip[0], el("div", { class:"en", style:"margin-top:4px;opacity:.85" }, L.tip[1])),
@@ -1255,7 +1568,7 @@ function viewGame(){
         el("button", { class:"btn ghost", onclick:back }, "ألعاب أخرى", el("span", { class:"dot" }, "🎮")),
         el("button", { class:"btn", onclick:() => go({ v:"quiz", uid:u.id, lid:l.id }) }, "إلى الاختبار", el("span", { class:"dot" }, "📝"))] });
   };
-  ({ pic:gPic, memory:gMemory, match:gMatch, fill:gFill, order:gOrder, scramble:gScramble, sort:gSort, tf:gTF })[g.g](host, g, finish);
+  ({ ...XD, pic:gPic, memory:gMemory, match:gMatch, fill:gFill, order:gOrder, scramble:gScramble, sort:gSort, tf:gTF })[g.g](host, g, finish);
   return frame;
 }
 
@@ -1300,7 +1613,7 @@ function runMCQ(host, items, done){
       } }, o.t);
       box.append(b);
     });
-    host.replaceChildren(progressHead(i, items.length, el("span", { class:"chip" }, `✔ ${correct}`)), it.img && IMG[it.img] ? el("img", { class:"qimg pop", src:IMG[it.img], alt:"صورة من الكتاب" }) : null, q, box, fb);
+    host.replaceChildren(progressHead(i, items.length, el("span", { class:"chip" }, `✔ ${correct}`)), it.img && IMG[it.img] ? el("img", { class:"qimg pop", src:IMG[it.img], alt:"صورة من الكتاب" }) : null, it.pre ? Object.assign(el("div", { class:"xpre" }), { innerHTML:it.pre }) : null, q, box, fb); if (it.auto) setTimeout(() => say(it.say), 250);
   };
   step();
 }
@@ -1519,7 +1832,7 @@ function viewWords(){
     const list = all.filter(w => (uf === "all" || w.u.id === uf) && (!q || (w.en + w.ar).toLowerCase().includes(q)));
     count.textContent = `${list.length} كلمة`;
     grid.replaceChildren(...list.map(w => { const f = el("button", { class:"flip", style:`--u:${w.u.c};--usoft:${w.u.soft}`, "aria-label":w.en },
-      el("div", { class:"in" }, el("div", { class:"f" }, el("span", { class:"w en" }, w.en), el("small", { class:"muted" }, "اضغط للقلب ↻")),
+      el("div", { class:"in" }, el("div", { class:"f" }, el("span", { class:"xe", style:"font-size:44px" }, emo(w.en)), el("span", { class:"w en" }, w.en), el("small", { class:"muted" }, "اضغط للقلب ↻")),
         el("div", { class:"b" }, el("span", { class:"w", style:"color:#1F3B38" }, w.ar), el("small", { class:"en", style:"color:#1F3B38;text-align:center" }, w.ex || ""))));
       f.addEventListener("click", () => { f.classList.toggle("open"); if (f.classList.contains("open")) say(w.en); }); return f; }));
   };
